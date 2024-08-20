@@ -3,6 +3,7 @@ from functools import partial as bind
 
 import dreamerv3
 import embodied
+from discrete_env.cartpole_pre_vec import create_cartpole
 
 warnings.filterwarnings('ignore', '.*truncated to dtype int32.*')
 
@@ -12,7 +13,7 @@ def main():
   config = embodied.Config(dreamerv3.Agent.configs['defaults'])
   config = config.update({
       **dreamerv3.Agent.configs['size100m'],
-      'logdir': f'~/logdir/{embodied.timestamp()}-example',
+      'logdir': f'./logdir/{embodied.timestamp()}-example',
       'run.train_ratio': 32,
   })
   config = embodied.Flags(config).parse()
@@ -48,6 +49,7 @@ def main():
     import crafter
     from embodied.envs import from_gym
     env = crafter.Env()
+    # env = create_cartpole(None, {})
     env = from_gym.FromGym(env)
     env = dreamerv3.wrap_env(env, config)
     return env
