@@ -2,11 +2,12 @@ import unittest
 
 import numpy as np
 
-from common.env.env_constructor import get_env_constructor
 from discrete_env.acrobot_pre_vec import AcrobotVecEnv, create_acrobot
 from discrete_env.cartpole_pre_vec import CartPoleVecEnv
+from discrete_env.env_constructor import get_env_constructor
+from discrete_env.helper_pre_vec import DictToArgs
 from discrete_env.mountain_car_pre_vec import MountainCarVecEnv, create_mountain_car
-from helper_local import DictToArgs
+
 
 
 class BaseDiscreteEnvTest(unittest.TestCase):

@@ -4,6 +4,7 @@ from functools import partial as bind
 import dreamerv3
 import embodied
 from discrete_env.cartpole_pre_vec import create_cartpole
+from discrete_env.env_constructor import get_pets_env_constructor
 
 warnings.filterwarnings('ignore', '.*truncated to dtype int32.*')
 
@@ -46,10 +47,11 @@ def main():
         online=config.replay.online)
 
   def make_env(config, env_id=0):
-    import crafter
+    # import crafter
     from embodied.envs import from_gym
-    env = crafter.Env()
-    # env = create_cartpole(None, {})
+    # env = crafter.Env()
+    env_cons = get_pets_env_constructor("cartpole")
+    env = env_cons(None, {})
     env = from_gym.FromGym(env)
     env = dreamerv3.wrap_env(env, config)
     return env
