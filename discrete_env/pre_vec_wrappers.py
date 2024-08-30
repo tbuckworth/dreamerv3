@@ -1,6 +1,5 @@
 import gymnasium as gym
 import numpy as np
-import torch
 
 
 class PetsWrapper(gym.Env):
@@ -25,12 +24,12 @@ class PetsWrapper(gym.Env):
     def close(self):
         return self.env.close()
 
-    def done_func(self, act, obs):
-        done = self.env.done_func(obs.detach().cpu().numpy())
-        return torch.BoolTensor(done).to(device=obs.device).unsqueeze(-1)
-    def rew_func(self, act, obs):
-        rew = self.env.rew_func(obs.detach().cpu().numpy())
-        return torch.Tensor(rew).type(obs.dtype).to(device=obs.device)
+    # def done_func(self, act, obs):
+    #     done = self.env.done_func(obs.detach().cpu().numpy())
+    #     return torch.BoolTensor(done).to(device=obs.device).unsqueeze(-1)
+    # def rew_func(self, act, obs):
+    #     rew = self.env.rew_func(obs.detach().cpu().numpy())
+    #     return torch.Tensor(rew).type(obs.dtype).to(device=obs.device)
 
 
 class DeVecEnvWrapper(gym.Env):

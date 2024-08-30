@@ -1,10 +1,11 @@
 import warnings
 from functools import partial as bind
 
+import gymnasium as gym
+
 import dreamerv3
 import embodied
-from discrete_env.cartpole_pre_vec import create_cartpole
-from discrete_env.env_constructor import get_pets_env_constructor
+from discrete_env.env_constructor import get_pets_env_constructor, get_dreamer_env_constructor
 
 warnings.filterwarnings('ignore', '.*truncated to dtype int32.*')
 
@@ -35,8 +36,8 @@ def main():
     return embodied.Logger(embodied.Counter(), [
         embodied.logger.TerminalOutput(config.filter),
         embodied.logger.JSONLOutput(logdir, 'metrics.jsonl'),
-        embodied.logger.TensorBoardOutput(logdir),
-        # embodied.logger.WandbOutput(logdir.name, config=config),
+        # embodied.logger.TensorBoardOutput(logdir),
+        embodied.logger.WandBOutput(logdir.name, config=config),
     ])
 
   def make_replay(config):
@@ -50,8 +51,9 @@ def main():
     # import crafter
     from embodied.envs import from_gym
     # env = crafter.Env()
-    env_cons = get_pets_env_constructor("cartpole")
-    env = env_cons(None, {})
+    # env_cons = get_dreamer_env_constructor("cartpole")
+    # env = env_cons(None, {})
+    env = gym.make('CartPole-v1')
     env = from_gym.FromGym(env)
     env = dreamerv3.wrap_env(env, config)
     return env

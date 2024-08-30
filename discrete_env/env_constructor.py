@@ -29,3 +29,13 @@ def get_pets_env_constructor(env_name):
         return PetsWrapper(DeVecEnvWrapper(env_cons(*args, **kwargs)))
 
     return pets_cons
+
+
+def get_dreamer_env_constructor(env_name):
+    env_cons = get_env_constructor(env_name)
+
+    def dreamer_cons(*args, **kwargs):
+        return DeVecEnvWrapper(env_cons(*args, **kwargs))
+
+    return dreamer_cons
+
